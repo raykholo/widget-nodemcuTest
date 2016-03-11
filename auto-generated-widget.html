@@ -415,10 +415,22 @@ cpdefine("inline:com-chilipeppr-widget-template", ["chilipeppr_ready", /* other 
             <!-- Tab 1 -->
             <div class="tab-content">
                 <div class="tab-pane active" id="com-chilipeppr-widget-template-tab1">
-                    <p>This is the content of tab 1.</p>
-                    <div class="">
-                        <button type="button" class="btn btn-xs btn-default btn-helloworld2" style="margin: 4px 0;">Hello World 2</button>
+                    <!--<p>This is the content of tab 1.</p>-->
+
+                    <div class="form-group">
+                        <label for="input-ipAddr">ESP8266 IP Address:  </label>
+                        <input type="text" class="form-control input-ipAddr" >
                     </div>
+
+                    <div class="">
+                        <button type="button" class="btn btn-xs btn-default btn-helloworld2" style="margin: 4px 0;">On</button>
+                    </div>
+
+                    <div class="">
+                        <button type="button" class="btn btn-xs btn-default btn-helloworld3" style="margin: 4px 0;">Off</button>
+                    </div>
+
+
                 </div>
 
                 <!-- Tab 2 -->
