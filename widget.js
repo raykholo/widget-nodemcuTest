@@ -132,13 +132,19 @@ cpdefine("inline:com-chilipeppr-widget-template", ["chilipeppr_ready", /* other 
          */
         init: function() {
             console.log("I am being initted. Thanks.");
-
+            var that = this;
             this.setupUiFromLocalStorage();
             this.btnSetup();
             this.forkSetup();
-
+            
+            $('#' + this.id + ' .input-ipAddr').change(function(evt) {
+                that.ipAddress = evt.target.value;
+                console.log ("ip changed:  ", that.ipAddress);
+            });
+            
             console.log("I am done being initted.");
         },
+        ipAddress: null,
         /**
          * Call this method from init to setup all the buttons when this widget
          * is first loaded. This basically attaches click events to your 
@@ -178,34 +184,55 @@ cpdefine("inline:com-chilipeppr-widget-template", ["chilipeppr_ready", /* other 
             // that the this is set correctly inside the anonymous method
             $('#' + this.id + ' .btn-sayhello').click(function() {
                 console.log("saying hello");
-                // Make sure popover is immediately hidden
-                $('#' + that.id + ' .btn-sayhello').popover("hide");
-                // Show a flash msg
-                chilipeppr.publish(
-                    "/com-chilipeppr-elem-flashmsg/flashmsg",
-                    "Hello Title",
-                    "Hello World from widget " + that.id,
-                    1000
-                );
+                
+                var ajaxRequest = $.ajax({
+                //timeout:900000,
+                type: "GET",
+                url: "//192.168.2.92/gpio/1",
+                contentType: false, //'application/json; charset=utf-8',
+                processData: false,
+                //data: formData,
+                success: function(data) {
+                    console.log ("on-get-success  ", data);
+                },
+                error: function(response) {
+                    console.log ("on-get-fail  ", response);
+                }
+            });
+                
             });
 
             // Init Hello World 2 button on Tab 1. Notice the use
             // of the slick .bind(this) technique to correctly set "this"
             // when the callback is called
-            $('#' + this.id + ' .btn-helloworld2').click(this.onHelloBtnClick.bind(this));
+            $('#' + this.id + ' .btn-on').click(this.onBtnClickOn.bind(this));
 
         },
         /**
          * onHelloBtnClick is an example of a button click event callback
          */
-        onHelloBtnClick: function(evt) {
-            console.log("saying hello 2 from btn in tab 1");
-            chilipeppr.publish(
-                '/com-chilipeppr-elem-flashmsg/flashmsg',
-                "Hello 2 Title",
-                "Hello World 2 from Tab 1 from widget " + this.id,
-                2000 /* show for 2 second */
-            );
+        onBtnClickOn: function(evt) {
+            console.log ("on button clicked");
+            //start ajax
+            ///*
+            var ajaxRequest = $.ajax({
+                //timeout:900000,
+                type: "GET",
+                url: "//192.168.2.92/gpio/0",
+                contentType: false, //'application/json; charset=utf-8',
+                processData: false,
+                //data: formData,
+                success: function(data) {
+                    console.log ("on-get-success  ", data);
+                },
+                error: function(response) {
+                    console.log ("on-get-fail  ", response);
+                }
+            });
+            //*/
+            //end ajax
+            
+            
         },
         /**
          * User options are available in this property for reference by your
